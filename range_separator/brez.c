@@ -2,37 +2,34 @@
 
 void print_segments(int start, int end, int segments)
 {
-    int delta = end - start;
+    int delta = end - start + 1;
     int step = delta / segments;
-    int err_step = (delta % segments) * 2;
+    int err_step = delta % segments;
     int err = 0;
-    int i = start;
-    while (i < end) {
-        printf("(%d, ", i);
-        i += step;
+    int cur = start;
+    int next = start;
+    for (int c = 0; c < segments; c++) {
+        next += step;
         err += err_step;
         if (err >= segments) {
-            i++;
-            err -= 2 * segments;
+            next++;
+            err -= segments;
         }
-        if (i != end) {
-            printf("%d)\n", i - 1);
-        }
+		printf("(%d, %d)\n", cur, next - 1);
+		cur = next;
     }
-    printf("%d)\n", i);
 }
 
 int main()
 {
     int range;
     int segments;
-
-    printf("Range: ");
-    scanf("%d", &range);
-    printf("segments: ");
-    scanf("%d", &segments);
-
-    print_segments(1, range, segments);
-
+    while (1) {
+        printf("Range: ");
+        scanf("%d", &range);
+        printf("segments: ");
+        scanf("%d", &segments);
+        print_segments(1, range, segments);
+    }
     return 0;
 }
